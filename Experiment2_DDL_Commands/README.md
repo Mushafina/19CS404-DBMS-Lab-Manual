@@ -266,5 +266,9 @@ max_salary integer default null);
 
 ![image](https://github.com/user-attachments/assets/cad772ad-8719-4e98-813b-704beda58dc8)
 
+### Module SEB:
+![image](https://github.com/user-attachments/assets/01efcbe0-c187-4552-93a1-fe1b252bbcf2)
+
+
 ## RESULT
 Thus, the SQL queries to implement different types of constraints and DDL commands have been executed successfully.
