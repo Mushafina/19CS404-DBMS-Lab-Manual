@@ -105,124 +105,166 @@ CREATE TABLE Table_Name (
 
 **Question 1**
 --
--- Paste Question 1 here
+-- Create a table named Members with the following columns:
+
+MemberID as INTEGER
+MemberName as TEXT
+JoinDate as DATE
 
 ```sql
--- Paste your SQL code below for Question 1
+-- create table Members (
+MemberID INTEGER ,
+MemberName TEXT,
+JoinDate DATE);
 ```
 
 **Output:**
 
-![Output1](output.png)
+![image](https://github.com/user-attachments/assets/aa0f51de-c8fd-4df9-9dc1-0ee31ec7b632)
+
 
 **Question 2**
 ---
--- Paste Question 2 here
+-- Write a SQL query to Rename the "city" column to "location" in the "customer" table.
 
 ```sql
--- Paste your SQL code below for Question 2
+--alter table customer rename column city to location; 
 ```
 
 **Output:**
-
-![Output2](output.png)
+![image](https://github.com/user-attachments/assets/48819121-b7ce-404d-8344-091a639c43cd)
 
 **Question 3**
 ---
--- Paste Question 3 here
+-- Insert the below data into the Student_details table, allowing the Subject and MARKS columns to take their default values.
 
 ```sql
--- Paste your SQL code below for Question 3
+-- insert into Student_details(RollNo,Name,Gender)
+values (204,'Samuel Black','M');
 ```
 
 **Output:**
-
-![Output3](output.png)
+![image](https://github.com/user-attachments/assets/36e51993-fe2e-4f1e-8023-4b38943163b4)
 
 **Question 4**
 ---
--- Paste Question 4 here
+--Create a table named Products with the following constraints:
+
+ProductID should be the primary key.
+ProductName should be NOT NULL.
+Price is of real datatype and should be greater than 0.
+Stock is of integer datatype and should be greater than or equal to 0.
 
 ```sql
--- Paste your SQL code below for Question 4
+-- create table Products (
+ProductID integer primary key,
+ProductName varchar not null,
+Price real check(price>0),
+Stock integer check(stock>=0));
 ```
 
 **Output:**
+![image](https://github.com/user-attachments/assets/e54f4d32-dbf7-4fe7-aece-342431c19159)
 
-![Output4](output.png)
 
 **Question 5**
 ---
--- Paste Question 5 here
+-- Insert all students from Archived_students table into the Student_details table.
 
 ```sql
--- Paste your SQL code below for Question 5
+-- insert into Student_details(RollNo,name,Gender,SUbject,MARKS)
+select RollNo,name,Gender,SUbject,MARKS from Archived_students;
 ```
 
 **Output:**
 
-![Output5](output.png)
+![image](https://github.com/user-attachments/assets/6dce1c0d-b76e-4ee0-b237-bc8819e4e66b)
 
 **Question 6**
 ---
--- Paste Question 6 here
+-- Write an SQL query to change the name of the column id to employee_id in the table employee.
 
 ```sql
--- Paste your SQL code below for Question 6
+--alter table employee rename column id to employee_id;
 ```
 
 **Output:**
+![image](https://github.com/user-attachments/assets/4b044fc0-ecb7-455a-adc9-fdc79e6f39c8)
 
-![Output6](output.png)
 
 **Question 7**
 ---
--- Paste Question 7 here
+--Create a table named Orders with the following constraints:
+OrderID as INTEGER should be the primary key.
+OrderDate as DATE should be not NULL.
+CustomerID as INTEGER should be a foreign key referencing Customers(CustomerID).
 
 ```sql
--- Paste your SQL code below for Question 7
+-- create table Orders(
+OrderID integer primary key,
+OrderDate date not NULL,
+CustomerID integer,
+foreign key (CustomerID) references Customers(CustomerID));
 ```
 
 **Output:**
+![image](https://github.com/user-attachments/assets/0559839e-a52f-4d73-9fb4-881346b8e2ab)
 
-![Output7](output.png)
 
 **Question 8**
 ---
--- Paste Question 8 here
+-- Create a table named Shipments with the following constraints:
+ShipmentID as INTEGER should be the primary key.
+ShipmentDate as DATE.
+SupplierID as INTEGER should be a foreign key referencing Suppliers(SupplierID).
+OrderID as INTEGER should be a foreign key referencing Orders(OrderID).
 
 ```sql
--- Paste your SQL code below for Question 8
+-- create table Shipments(
+ShipmentID integer primary key,
+ShipmentDate date,
+SupplierID integer,
+OrderID integer,
+foreign key(SupplierID) references Suppliers(SupplierID),
+foreign key(OrderID) references Orders(OrderID));
 ```
 
 **Output:**
 
-![Output8](output.png)
+![image](https://github.com/user-attachments/assets/98c11c71-66e2-4959-b8f2-7e56f58a8ba4)
+
 
 **Question 9**
 ---
--- Paste Question 9 here
+-- In the Employee table, insert a record where some fields are NULL, another record where all fields are filled without any NULL values, and a third record where some fields are filled, and others are left as NULL.
 
 ```sql
--- Paste your SQL code below for Question 9
+-- insert into Employee(EmployeeID,Name,Position,Department,Salary)
+values(5,'George Clark','Consultant',null,null)
+,(7,'Noah Davis','Manager','HR',60000),
+(8,'Ava Miller','Consultant','IT',null);
 ```
 
 **Output:**
 
-![Output9](output.png)
+![image](https://github.com/user-attachments/assets/ffd871ff-9c79-49ce-af46-2cf21fe8f68a)
+
 
 **Question 10**
 ---
--- Paste Question 10 here
+-- create a table named jobs including columns job_id, job_title, min_salary and max_salary, and make sure that, the default value for job_title is blank and min_salary is 8000 and max_salary is NULL will be entered automatically at the time of insertion if no value assigned for the specified columns.
 
 ```sql
--- Paste your SQL code below for Question 10
+-- create table jobs(
+job_id integer primary key,
+job_title varchar default '',
+min_salary integer default 8000,
+max_salary integer default null);
 ```
 
 **Output:**
 
-![Output10](output.png)
-
+![image](https://github.com/user-attachments/assets/cad772ad-8719-4e98-813b-704beda58dc8)
 
 ## RESULT
 Thus, the SQL queries to implement different types of constraints and DDL commands have been executed successfully.
