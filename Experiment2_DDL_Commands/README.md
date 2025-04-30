@@ -105,14 +105,14 @@ CREATE TABLE Table_Name (
 
 **Question 1**
 --
--- Create a table named Members with the following columns:
+Create a table named Members with the following columns:
 
 MemberID as INTEGER
 MemberName as TEXT
 JoinDate as DATE
 
 ```sql
--- create table Members (
+create table Members (
 MemberID INTEGER ,
 MemberName TEXT,
 JoinDate DATE);
@@ -125,10 +125,10 @@ JoinDate DATE);
 
 **Question 2**
 ---
--- Write a SQL query to Rename the "city" column to "location" in the "customer" table.
+Write a SQL query to Rename the "city" column to "location" in the "customer" table.
 
 ```sql
---alter table customer rename column city to location; 
+alter table customer rename column city to location; 
 ```
 
 **Output:**
@@ -136,10 +136,10 @@ JoinDate DATE);
 
 **Question 3**
 ---
--- Insert the below data into the Student_details table, allowing the Subject and MARKS columns to take their default values.
+Insert the below data into the Student_details table, allowing the Subject and MARKS columns to take their default values.
 
 ```sql
--- insert into Student_details(RollNo,Name,Gender)
+insert into Student_details(RollNo,Name,Gender)
 values (204,'Samuel Black','M');
 ```
 
@@ -148,7 +148,7 @@ values (204,'Samuel Black','M');
 
 **Question 4**
 ---
---Create a table named Products with the following constraints:
+Create a table named Products with the following constraints:
 
 ProductID should be the primary key.
 ProductName should be NOT NULL.
@@ -156,7 +156,7 @@ Price is of real datatype and should be greater than 0.
 Stock is of integer datatype and should be greater than or equal to 0.
 
 ```sql
--- create table Products (
+create table Products (
 ProductID integer primary key,
 ProductName varchar not null,
 Price real check(price>0),
@@ -169,10 +169,10 @@ Stock integer check(stock>=0));
 
 **Question 5**
 ---
--- Insert all students from Archived_students table into the Student_details table.
+Insert all students from Archived_students table into the Student_details table.
 
 ```sql
--- insert into Student_details(RollNo,name,Gender,SUbject,MARKS)
+insert into Student_details(RollNo,name,Gender,SUbject,MARKS)
 select RollNo,name,Gender,SUbject,MARKS from Archived_students;
 ```
 
@@ -182,10 +182,10 @@ select RollNo,name,Gender,SUbject,MARKS from Archived_students;
 
 **Question 6**
 ---
--- Write an SQL query to change the name of the column id to employee_id in the table employee.
+Write an SQL query to change the name of the column id to employee_id in the table employee.
 
 ```sql
---alter table employee rename column id to employee_id;
+alter table employee rename column id to employee_id;
 ```
 
 **Output:**
@@ -194,13 +194,13 @@ select RollNo,name,Gender,SUbject,MARKS from Archived_students;
 
 **Question 7**
 ---
---Create a table named Orders with the following constraints:
+Create a table named Orders with the following constraints:
 OrderID as INTEGER should be the primary key.
 OrderDate as DATE should be not NULL.
 CustomerID as INTEGER should be a foreign key referencing Customers(CustomerID).
 
 ```sql
--- create table Orders(
+create table Orders(
 OrderID integer primary key,
 OrderDate date not NULL,
 CustomerID integer,
@@ -213,14 +213,14 @@ foreign key (CustomerID) references Customers(CustomerID));
 
 **Question 8**
 ---
--- Create a table named Shipments with the following constraints:
+Create a table named Shipments with the following constraints:
 ShipmentID as INTEGER should be the primary key.
 ShipmentDate as DATE.
 SupplierID as INTEGER should be a foreign key referencing Suppliers(SupplierID).
 OrderID as INTEGER should be a foreign key referencing Orders(OrderID).
 
 ```sql
--- create table Shipments(
+create table Shipments(
 ShipmentID integer primary key,
 ShipmentDate date,
 SupplierID integer,
@@ -236,10 +236,10 @@ foreign key(OrderID) references Orders(OrderID));
 
 **Question 9**
 ---
--- In the Employee table, insert a record where some fields are NULL, another record where all fields are filled without any NULL values, and a third record where some fields are filled, and others are left as NULL.
+In the Employee table, insert a record where some fields are NULL, another record where all fields are filled without any NULL values, and a third record where some fields are filled, and others are left as NULL.
 
 ```sql
--- insert into Employee(EmployeeID,Name,Position,Department,Salary)
+insert into Employee(EmployeeID,Name,Position,Department,Salary)
 values(5,'George Clark','Consultant',null,null)
 ,(7,'Noah Davis','Manager','HR',60000),
 (8,'Ava Miller','Consultant','IT',null);
@@ -252,10 +252,10 @@ values(5,'George Clark','Consultant',null,null)
 
 **Question 10**
 ---
--- create a table named jobs including columns job_id, job_title, min_salary and max_salary, and make sure that, the default value for job_title is blank and min_salary is 8000 and max_salary is NULL will be entered automatically at the time of insertion if no value assigned for the specified columns.
+create a table named jobs including columns job_id, job_title, min_salary and max_salary, and make sure that, the default value for job_title is blank and min_salary is 8000 and max_salary is NULL will be entered automatically at the time of insertion if no value assigned for the specified columns.
 
 ```sql
--- create table jobs(
+create table jobs(
 job_id integer primary key,
 job_title varchar default '',
 min_salary integer default 8000,
