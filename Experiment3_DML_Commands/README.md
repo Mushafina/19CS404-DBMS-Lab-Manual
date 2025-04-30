@@ -47,123 +47,189 @@ SELECT column1, column2 FROM table_name WHERE condition;
 ```
 **Question 1**
 --
--- Paste Question 1 here
+Change the supplier name to upper case where contact person contains ' Singh' in suppliers table.
 
+name               type
+-----------------  ---------------
+supplier_id        INT
+supplier_name      VARCHAR(100)
+contact_person     VARCHAR(100)
+phone_number       VARCHAR(20)
+email              VARCHAR(100)
+address            VARCHAR(250)
 ```sql
--- Paste your SQL code below for Question 1
+update suppliers 
+set supplier_name=upper(supplier_name)
+where contact_person like '%SINGH%';
 ```
 
 **Output:**
+![image](https://github.com/user-attachments/assets/41f6e757-ce4c-4842-b1b9-61323bc47dcc)
 
-![Output1](output.png)
 
 **Question 2**
 ---
--- Paste Question 2 here
+Write a SQL statement to Update the product_name to 'Premium Bread' whose product ID is 5 in the products table.
+
+Products table
+
+---------------
+product_id
+product_name
+category
+cost_price
+sell_price
+reorder_lvl
+quantity
+supplier_id
 
 ```sql
--- Paste your SQL code below for Question 2
+update products 
+set product_name='Premium Bread'
+where product_id=5;
 ```
 
 **Output:**
+![image](https://github.com/user-attachments/assets/06a8e324-32c0-44bd-a3df-2c365b24c927)
 
-![Output2](output.png)
 
 **Question 3**
 ---
--- Paste Question 3 here
+Write a SQL statement to Increase the selling price by 15% in the products table where quantity in stock is less than 50 and supplier ID is 10.
+
+Products Table 
+
+name          type       
+----------    ---------- 
+product_id     INT PRIMARY KEY        
+product_name   VARCHAR(10) 
+category       VARCHAR(50) 
+cost_price     DECIMAL(10) 
+sell_price     DECIMAL(10) 
+reorder_lv     INT        
+quantity       INT        
+supplier_id    INT    
 
 ```sql
--- Paste your SQL code below for Question 3
+update products 
+set sell_price=sell_price*1.15
+where quantity<50 and supplier_id=10;
 ```
 
 **Output:**
 
-![Output3](output.png)
+![image](https://github.com/user-attachments/assets/e15161b0-0e6f-4258-baf6-4c6516013e90)
 
 **Question 4**
 ---
--- Paste Question 4 here
+Write a SQL statement to Increase the salary by 500 and email as 'updated' for employees with job ID 'SA_REP' and commission percentage greater than 0.15
 
+Employees table
+
+---------------
+employee_id
+first_name
+last_name
+email
+phone_number
+hire_date
+job_id
+salary
+commission_pct
+manager_id
+department_id
 ```sql
--- Paste your SQL code below for Question 4
+update employees 
+set salary=salary+500,email='updated'
+where job_id='SA_REP' and commission_pct>0.15;
 ```
 
 **Output:**
 
-![Output4](output.png)
+![image](https://github.com/user-attachments/assets/311c33d6-30f0-4fd2-95fe-3b2787789e03)
 
 **Question 5**
 ---
--- Paste Question 5 here
+Write a SQL query to Delete All Doctors with a NULL Last Name
 
 ```sql
--- Paste your SQL code below for Question 5
+delete from doctors where last_name is null;
 ```
 
 **Output:**
 
-![Output5](output.png)
+![image](https://github.com/user-attachments/assets/4aaae89c-bea6-445d-8a6c-4ed3a6bc0b86)
+
 
 **Question 6**
 ---
--- Paste Question 6 here
+Write a SQL query to Delete customers with 'CUST_COUNTRY' 'UK' and 'WORKING_AREA' 'London' whose 'GRADE' is less than 3
 
 ```sql
--- Paste your SQL code below for Question 6
+delete from customer 
+where upper(cust_country) ='UK' 
+and upper(working_area)='LONDON' 
+and grade<3;
 ```
 
 **Output:**
+![image](https://github.com/user-attachments/assets/5fbd67c3-c529-4fe8-a7b9-264669945757)
 
-![Output6](output.png)
 
 **Question 7**
 ---
--- Paste Question 7 here
+Write a SQL query to Delete customers with 'GRADE' 2 and 'CUST_NAME' starting with 'M', and whose 'PAYMENT_AMT' is less than 3000
 
 ```sql
--- Paste your SQL code below for Question 7
+delete from customer 
+where grade=2 and upper(cust_name) like '%M%' and payment_amt<3000;
 ```
 
 **Output:**
 
-![Output7](output.png)
+![image](https://github.com/user-attachments/assets/b05bb3d0-d809-45ac-a867-a9bad070b38c)
+
 
 **Question 8**
 ---
--- Paste Question 8 here
+Write a SQL query to Delete All Doctors with a NULL Specialization
 
 ```sql
--- Paste your SQL code below for Question 8
+delete from doctors 
+where specialization is null;
 ```
 
 **Output:**
 
-![Output8](output.png)
+![image](https://github.com/user-attachments/assets/cde3788e-53ea-4149-97fd-3374704f9f30)
+
 
 **Question 9**
 ---
--- Paste Question 9 here
+Write a SQL query to Delete customers from 'customer' table where 'CUST_COUNTRY' is neither 'India' nor 'USA'.
 
 ```sql
--- Paste your SQL code below for Question 9
+delete from customer 
+where (cust_country) not in ('India','USA');
 ```
 
 **Output:**
 
-![Output9](output.png)
+![image](https://github.com/user-attachments/assets/bf44666c-a2ce-4385-9b35-fc9ab94f38b4)
+
 
 **Question 10**
 ---
--- Paste Question 10 here
+Write a query to fetch 5 to 9 records from EmployeeInfo table.
 
 ```sql
--- Paste your SQL code below for Question 10
+select * from employeeinfo 
+where EmpID between 5 and 9;
 ```
 
 **Output:**
 
-![Output10](output.png)
+![image](https://github.com/user-attachments/assets/9888b1f4-3e7b-46b3-8915-6d0502fdb24f)
 
 ## RESULT
 Thus, the SQL queries to implement DML commands have been executed successfully.
