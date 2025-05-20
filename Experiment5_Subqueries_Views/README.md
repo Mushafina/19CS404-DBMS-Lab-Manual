@@ -37,61 +37,47 @@ DROP VIEW view_name;
 ```
 
 **Question 1**
-From the following tables write a SQL query to find the details of an order. Return ord_no, ord_date, purch_amt, Customer Name, grade, Salesman, commission. 
+Write a SQL query that retrieves the names of students and their corresponding grades, where the grade is equal to the maximum grade achieved in each subject.
+
+Sample table: GRADES (attributes: student_id, student_name, subject, grade)
+
 ```
-select o.ord_no,o.ord_date,o.purch_amt,c.cust_name as "Customer Name",c.grade,s.name as "Salesman",s.commission
-from orders o
-join customer c on o.customer_id=c.customer_id
-join salesman s on c.salesman_id=s.salesman_id;
+select student_name,grade
+from grades g
+where grade=(
+select max(grade)
+from grades
+where subject=g.subject);
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/730d4ffe-f876-43f6-a1c4-a2b8374e6dd3)
+![image](https://github.com/user-attachments/assets/c7c06899-ccb0-4d86-bb12-998aa16a1fe5)
+
 
 
 **Question 2**
-Write a SQL statement to join the tables salesman, customer and orders so that the same column of each table appears once and only the relational rows are returned. 
+Write a SQL query to retrieve all columns from the CUSTOMERS table for customers whose Address as Delhi
 
 ```
-SELECT 
-    o.ord_no,
-    o.purch_amt,
-    o.ord_date,
-    c.cust_name,
-    c.city AS customer_city,
-    c.grade,
-    s.name AS salesman_name,
-    s.city AS salesman_city,
-    s.commission
-FROM 
-    orders o
-JOIN 
-    customer c ON o.customer_id = c.customer_id
-JOIN 
-    salesman s ON o.salesman_id = s.salesman_id;
+select * from customers 
+where address='Delhi';
 
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/b90a0a79-bef2-4acd-a7a9-4b8ad16cdda1)
+![image](https://github.com/user-attachments/assets/1533f256-bcd1-4862-a634-a90f45ef269b)
 
 **Question 3**
-From the following tables write a SQL query to find salespeople who received commissions of more than 12 percent from the company. Return Customer Name, customer city, Salesman, commission.  
+Write a SQL query to Retrieve the names of customers who have a phone number that is not shared with any other customer 
 
 ```
-SELECT 
-    c.cust_name AS "Customer Name",
-    c.city,
-    s.name AS "Salesman",
-    s.commission
-FROM 
-    customer c
-JOIN 
-    salesman s ON c.salesman_id = s.salesman_id
-WHERE 
-    s.commission > 0.12;
+select name from customer 
+where phone in (
+select phone from customer 
+group by phone
+having count(*)=1);
 
 ```
 
@@ -100,113 +86,128 @@ WHERE
 ![image](https://github.com/user-attachments/assets/3b9f3cbc-565f-4be7-8228-d1320833fbd5)
 
 **Question 4**
-Write the SQL query that achieves the selection of the "cust_name" and "city" columns from the "customer" table (aliased as "c"), and the "ord_no," "ord_date," and "purch_amt" columns from the "orders" table (aliased as "o"), with a left join on the "customer_id" column and a condition filtering for customers in the city 'London'.
+Write a SQL query that retrieves the names of students and their corresponding grades, where the grade is equal to the minimum grade achieved in each subject.
+
 
 ```
-SELECT 
-    c.cust_name,c.city,o.ord_no,o.ord_date,o.purch_amt
-from 
-    customer c 
-left join orders o on c.customer_id=o.customer_id
-where c.city="London";
+select student_name,grade from grades g 
+where grade=(
+select min(grade)
+from grades
+where subject=g.subject);
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/06a0c918-5627-4120-9a31-d6304ea83115)
+![image](https://github.com/user-attachments/assets/a33c5abe-1d46-4191-85b9-00adb8acebcd)
 
 
 **Question 5**
-Write the SQL query that accomplishes the selection of the first name from the "patients" table (aliased as "patient_name") and the first name from the "doctors" table (aliased as "doctor_name"), with an inner join on the "doctor_id" column and a condition filtering for patients with a non-null discharge date.
+From the following tables write a SQL query to count the number of customers with grades above the average in New York City. Return grade and count.
 
 ```
-select p.first_name as "patient_name",d.first_name as "doctor_name" 
-from patients p 
-inner join doctors d on p.doctor_id=d.doctor_id
-where p.discharge_date is not null;
+SELECT grade, COUNT(*)
+FROM customer
+WHERE grade > (
+    SELECT AVG(grade)
+    FROM customer
+    WHERE city = 'New York')
+group by grade;
+
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/454d40fd-7ee2-45b6-9c60-d12d742aecec)
+![image](https://github.com/user-attachments/assets/5fd8a955-e5ba-498b-8916-319e15d88aa9)
 
 
 **Question 6**
-Write the SQL query that achieves the selection of the first name from the "patients" table (aliased as "patient_name"), with an inner join on the "patient_id" column and a condition filtering for test results with the test name 'Blood Pressure'.
+Write a SQL query to List departments with names longer than the average length
 
 ```
-SELECT 
-    p.first_name AS patient_name
-FROM 
-    patients p
-INNER JOIN 
-    test_results t ON p.patient_id = t.patient_id
-WHERE 
-    t.test_name = 'Blood Pressure';
+SELECT department_id, department_name
+FROM Departments
+WHERE LENGTH(department_name) > (
+    SELECT AVG(LENGTH(department_name))
+    FROM Departments
+);
 
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/f1be90e6-dad5-416e-b651-058404b99405)
+![image](https://github.com/user-attachments/assets/97396ef1-227f-4595-9c98-3df0671b22d3)
+
 
 
 **Question 7**
-Write the SQL query that achieves the selection of the "cust_name" column from the "customer" table (aliased as "c"), with a left join on the "customer_id" column.
+From the following tables, write a SQL query to find all the orders issued by the salesman 'Paul Adam'. Return ord_no, purch_amt, ord_date, customer_id and salesman_id.
 
 ```
-select c.cust_name from customer c
-left join orders o on c.customer_id=o.customer_id;
+SELECT ord_no, purch_amt, ord_date, customer_id, o.salesman_id
+FROM orders o
+JOIN salesman s ON o.salesman_id = s.salesman_id
+WHERE s.name = 'Paul Adam';
+
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/9cceefaa-da00-495b-9d4e-fc79af9d499a)
+![image](https://github.com/user-attachments/assets/e96774d8-7d68-4623-b263-f676b3c9b7f9)
+
 
 
 **Question 8**
-From the following tables write a SQL query to find those customers with a grade less than 300. Return cust_name, customer city, grade, Salesman, salesmancity. The result should be ordered by ascending customer_id. 
+Write a SQL query to Find employees who have an age less than the average age of employees with incomes over 1 million
 
 ```
-select c.cust_name,c.city,c.grade,s.name as "Salesman",s.city
-from customer c
-join salesman s on c.salesman_id=s.salesman_id
-where c.grade<300
-order by customer_id asc;
+select * from employee 
+where age<(
+select avg(age)
+from employee
+where income>1000000);
 ```
 
 **Output:**
-
-![image](https://github.com/user-attachments/assets/8fc9d9c5-443e-4cd1-8957-dde1103170ed)
+![image](https://github.com/user-attachments/assets/e6ab7e70-a088-47eb-8597-83ee1e5d5584)
 
 
 **Question 9**
-Write the SQL query that achieves the selection of the first name from the "patients" table (aliased as "patient_name") and all columns from the "test_results" table (aliased as "t"), with an inner join on the "patient_id" column and a condition filtering for patients admitted between '2024-01-01' and '2024-01-31
+Write a SQL query that retrieve all the columns from the table "Grades", where the grade is equal to the maximum grade achieved in each subject.
 
 ```
-select p.first_name as patient_name,t.result_id,t.patient_id,t.test_name,t.result,t.test_date
-from patients p
-inner join test_results t on p.patient_id=t.patient_id
-where p.admission_date between '2024-01-01' and '2024-01-31';
+select * from grades g
+where grade=(
+select max(grade)
+from grades
+where subject=g.subject);
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/64fcc645-0d3a-440c-a493-1f7e3aada131)
+![image](https://github.com/user-attachments/assets/21879361-1994-4c93-8cf4-15ae87d1d407)
+
 
 
 **Question 10**
-write a SQL query to find the salesperson and customer who reside in the same city. Return Salesman, cust_name and city.
+From the following tables write a SQL query to find salespeople who had more than one customer. Return salesman_id and name.
 
 ```
-select s.name as Salesman,c.cust_name,c.city
-from salesman s
-inner join customer c on s.city=c.city;
+SELECT s.salesman_id, s.name
+FROM salesman s
+JOIN (
+    SELECT salesman_id
+    FROM customer
+    GROUP BY salesman_id
+    HAVING COUNT(*) > 1
+) c ON s.salesman_id = c.salesman_id;
+
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/4343c1da-6888-45c7-84f7-383f9bbd7bf2)
+![image](https://github.com/user-attachments/assets/f9f04aa5-8aaa-4649-933a-ff0a0c235487)
+
 
 
 
