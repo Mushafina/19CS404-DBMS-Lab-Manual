@@ -119,28 +119,104 @@ DELETE FROM sensitive_data WHERE record_id=3;
 - Add a `last_modified` column to the `products` table.
 - Write a **BEFORE UPDATE** trigger on the `products` table to set the `last_modified` column to the current timestamp whenever an update occurs.
 
+**Program**
+```
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR2(100),
+    price NUMBER(10, 2),
+    last_modified TIMESTAMP
+);
+INSERT INTO products (product_id, product_name, price)
+VALUES (4, 'Tab', 30000),(5,'HP Laptop',60000),(6,'Smartphone',35000);
+CREATE OR REPLACE TRIGGER update_last_modified
+BEFORE UPDATE ON products
+FOR EACH ROW
+BEGIN
+    :NEW.last_modified := SYSTIMESTAMP;
+END;
+/
+
+UPDATE products
+SET price = 46000
+WHERE product_id = 5;
+SELECT * FROM products;
+```
+
 **Expected Output:**
 - The `last_modified` column in the `products` table is updated automatically to the current date and time when any record is updated.
+- 
+![image](https://github.com/user-attachments/assets/f03ba488-94ca-476b-bc98-ac97e0c6f099)
 
----
 
 ## 4. Write a trigger to keep track of the number of updates made to a table.
 **Steps:**
 - Create an `audit_log` table with a counter column.
 - Write an **AFTER UPDATE** trigger on the `customer_orders` table to increment the counter in the `audit_log` table every time a record is updated.
 
+**Program**
+```
+CREATE TABLE customer_orders (
+    order_id INT PRIMARY KEY,
+    customer_name VARCHAR2(100),
+    product_name VARCHAR2(100),
+    quantity INT
+);
+INSERT INTO customer_orders (order_id, customer_name, product_name, quantity)
+VALUES (10, 'Kshira', 'Samsung S23', 5),(11,'Thanushree','HP Laptop',2);
+CREATE TABLE audit_log (
+    table_name VARCHAR2(50) PRIMARY KEY,
+    update_count INT
+);
+INSERT INTO audit_log (table_name, update_count)
+VALUES ('CUSTOMER_ORDERS', 10);
+CREATE OR REPLACE TRIGGER track_order_updates
+AFTER UPDATE ON customer_orders
+FOR EACH ROW
+BEGIN
+    UPDATE audit_log
+    SET update_count = update_count + 1
+    WHERE table_name = 'CUSTOMER_ORDERS';
+END;
+/
+
+UPDATE customer_orders
+SET quantity = 3
+WHERE order_id = 11;
+SELECT * FROM audit_log;
+```
 **Expected Output:**
 - The `audit_log` table will maintain a count of how many updates have been made to the `customer_orders` table.
+![image](https://github.com/user-attachments/assets/d5f806eb-3892-4748-b4ef-36e5b0ddf612)
 
----
 
 ## 5. Write a trigger that checks a condition before allowing insertion into a table.
 **Steps:**
 - Write a **BEFORE INSERT** trigger on the `employees` table to check if the inserted salary meets a specific condition (e.g., salary must be greater than 3000).
 - If the condition is not met, raise an error to prevent the insert.
 
+**Program**
+```
+CREATE TABLE employeesfor5th (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR2(100),
+    salary NUMBER(10, 2)
+);
+CREATE OR REPLACE TRIGGER check_salary_before_insert
+BEFORE INSERT ON employeesfor5th
+FOR EACH ROW
+BEGIN
+    IF :NEW.salary < 3000 THEN
+        RAISE_APPLICATION_ERROR(-20002, 'ERROR: Salary below minimum threshold.');
+    END IF;
+END;
+/
+INSERT INTO employeesfor5th (emp_id, emp_name, salary)
+VALUES (5, 'Nakshathira', 5000),(7,'Kaavya',7000);
+```
 **Expected Output:**
 - If the inserted salary in the `employees` table is below the condition (e.g., salary < 3000), the insert operation is blocked, and an error message is raised, such as: `ERROR: Salary below minimum threshold.`
+![image](https://github.com/user-attachments/assets/987fd423-33de-43d5-8efd-28ab5efe2ca1)
 
 ## RESULT
 Thus, the PL/SQL trigger programs were written and executed successfully.
