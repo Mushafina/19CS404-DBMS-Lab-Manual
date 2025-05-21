@@ -30,10 +30,58 @@ END;
 - Create two tables: `employees` (for storing data) and `employee_log` (for logging the inserts).
 - Write an **AFTER INSERT** trigger on the `employees` table to log the new data into the `employee_log` table.
 
+**Program**
+```
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(100),
+    department VARCHAR(50),
+    hire_date DATE
+);
+CREATE TABLE employee_log (
+    log_id INT PRIMARY KEY,
+    emp_id INT,
+    emp_name VARCHAR(100),
+    department VARCHAR(50),
+    hire_date DATE,
+    inserted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE OR REPLACE TRIGGER after_employee_insert
+AFTER INSERT ON employees
+FOR EACH ROW
+DECLARE
+    new_log_id INT;
+BEGIN
+    SELECT NVL(MAX(log_id), 0) + 1 INTO new_log_id FROM employee_log;
+
+    INSERT INTO employee_log (
+        log_id,
+        emp_id,
+        emp_name,
+        department,
+        hire_date,
+        inserted_at
+    ) VALUES (
+        new_log_id,
+        :NEW.emp_id,
+        :NEW.emp_name,
+        :NEW.department,
+        :NEW.hire_date,
+        SYSTIMESTAMP
+    );
+END;
+/
+INSERT INTO employees (emp_id, emp_name, department, hire_date)
+VALUES (102, 'Mushafina', 'Information Technology', DATE '2025-05-21');
+
+SELECT * FROM EMPLOYEE_LOG;
+```
+
 **Expected Output:**
 - A new entry is added to the `employee_log` table each time a new record is inserted into the `employees` table.
 
----
+![image](https://github.com/user-attachments/assets/35235c08-4d4b-4340-81ad-95cf82093dd7)
+
 
 ## 2. Write a trigger to prevent deletion of records from a sensitive table.
 **Steps:**
@@ -43,7 +91,28 @@ END;
 **Expected Output:**
 - If an attempt is made to delete a record from `sensitive_data`, an error message is raised, e.g., `ERROR: Deletion not allowed on this table.`
 
----
+![image](https://github.com/user-attachments/assets/c258e6a0-c804-47df-b66e-4f11bb6f3fe6)
+
+**Program**
+```
+CREATE TABLE sensitive_data (
+    record_id INT PRIMARY KEY,
+    info VARCHAR2(100)
+);
+INSERT INTO sensitive_data (record_id, info)
+VALUES (3, 'Secured'),
+       (4, 'COnfidential');
+
+CREATE OR REPLACE TRIGGER prevent_sensitive_deletion
+BEFORE DELETE ON sensitive_data
+FOR EACH ROW
+BEGIN
+    RAISE_APPLICATION_ERROR(-20001, 'ERROR: Deletion not allowed on this table.');
+END;
+/
+
+DELETE FROM sensitive_data WHERE record_id=3;
+```
 
 ## 3. Write a trigger to automatically update a `last_modified` timestamp.
 **Steps:**
